@@ -1,0 +1,47 @@
+import Vue from 'vue'
+import Vuex from 'vuex'
+
+import Config from '../config'
+import moment from 'moment'
+
+import modules from './modules'
+
+const ElectronStore = require('electron-store')
+const instanceOfElectronStore = new ElectronStore()
+
+Vue.use(Vuex)
+
+// Local
+let StoreLocal = Config.defaultLocal
+Config.localAvailable.forEach(function (Local) {
+  if (Local.indexOf(Config.local) !== -1) {
+    StoreLocal = Local
+  }
+}, this)
+
+// State
+const state = {
+  local: StoreLocal,
+  electronStore: instanceOfElectronStore
+}
+
+// Mutation
+const mutations = {
+  EDIT_LOCAL (state, local) {
+    Vue.i18n.set(local)
+    moment.locale(local)
+    state.local = local
+  }
+}
+
+// Getters
+const getters = {
+}
+
+export default new Vuex.Store({
+  state,
+  mutations,
+  modules,
+  getters,
+  strict: process.env.NODE_ENV !== 'production'
+})
