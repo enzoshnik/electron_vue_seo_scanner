@@ -14,7 +14,7 @@ Platform:
   darwin x64
 
 Trace: 
-  Error: EACCES: permission denied, mkdir '/Volumes/Mac HDD/PhpstormProjects/SEO-Manager-Electron-master/node_modules/bonjour/node_modules/array-flatten'
+  Error: EACCES: permission denied, mkdir '/Volumes/Mac HDD/PhpstormProjects/SEO-Manager-Electron-master/node_modules/electron-download/node_modules/debug'
 
 npm manifest: 
   {
@@ -112,7 +112,7 @@ npm manifest:
       "css-loader": "^0.28.4",
       "del": "^2.2.1",
       "devtron": "^1.1.0",
-      "electron": "^1.7.2",
+      "electron": "^4.0.0",
       "electron-builder": "^19.10.0",
       "electron-debug": "^1.1.0",
       "electron-devtools-installer": "^2.0.1",
@@ -1709,7 +1709,7 @@ Lockfile:
       lodash.reject "^4.4.0"
       lodash.some "^4.4.0"
   
-  cheerio@^1.0.0:
+  cheerio@^1.0.0-rc.2:
     version "1.0.0-rc.2"
     resolved "https://registry.yarnpkg.com/cheerio/-/cheerio-1.0.0-rc.2.tgz#4b9f53a81b27e4d5dac31c0ffd0cfa03cc6830db"
     dependencies:

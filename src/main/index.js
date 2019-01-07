@@ -32,6 +32,17 @@ function createWindow () {
   })
 }
 
+// SQlite3
+var sqlite3 = require('sqlite3').verbose()
+var db = new sqlite3.Database('./database.sqlite')
+db.serialize(function () {
+  db.run('CREATE TABLE IF NOT EXISTS domains (domain TEXT)')
+  db.run('CREATE TABLE IF NOT EXISTS quotes (quote TEXT, domain INTEGER, visited INTEGER)')
+  db.run('CREATE TABLE IF NOT EXISTS pages (page TEXT, domain INTEGER, data INTEGER)')
+  db.run('CREATE TABLE IF NOT EXISTS data (title TEXT, description TEXT, status_code INTEGER, h1 TEXT)')
+})
+db.close()
+
 app.on('ready', createWindow)
 
 app.on('window-all-closed', () => {

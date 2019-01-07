@@ -5,7 +5,7 @@
       <div class="ui form">
         <div class="field">
           <label>{{ $t('config.pagespeed.label') }}</label>
-          <input class="prompt" type="text" autocomplete="off" v-model="Localkey" v-on:keyup="updateKey(Localkey)">
+          <input aria-labelledby="billing Pagespeed key" class="prompt" type="text" autocomplete="off" v-model="Localkey" v-on:keyup="updateKey(Localkey)">
         </div>
       </div>
       <p>
