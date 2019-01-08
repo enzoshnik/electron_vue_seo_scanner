@@ -29,9 +29,7 @@ const mutations = {
       // if (typeof state.links[l] === 'undefined') state.links[l] = false
   },
   ADD_QUOTE (state, quote) {
-    offlineDatabase().insert({'quote': quote.url, 'domain': 1, 'visited': 0}).into('quotes').then((updatedRows) => {
-      console.log(updatedRows)
-    })
+    offlineDatabase().insert({'quote': quote.url, 'domain': 1, 'visited': 0}).into('quotes').then()
     state.quote.push(quote.url)
     state.urls.push({
       url: quote.url,
@@ -43,9 +41,7 @@ const mutations = {
     })
   },
   ADD_DOMAIN (state, url) {
-    offlineDatabase().insert({'domain': url}).into('domains').then((updatedRows) => {
-      console.log(updatedRows)
-    })
+    offlineDatabase('domains').insert({'domain': url}).then()
     state.domains.push(url)
   },
   REMOVE_QUOTE (state, quote) {
@@ -54,6 +50,17 @@ const mutations = {
   },
   UPDATE_QUOTE (state, params) {
     const $ = params.$
+
+    // Sqlite Update
+    offlineDatabase('quotes').where('quote', params.url).update('visited', 1).then(() => {
+      offlineDatabase('data').insert({
+        'title': $('title').text(),
+        'description': $('meta[name="description"]').attr('content'),
+        'status_code': params.data.statusCode,
+        'h1': $('h1').text()
+      }).then()
+    })
+
     const foundIndex = state.urls.findIndex(x => x.url === params.url)
     // state.quote.splice(foundIndex, 1)
     let el = state.urls[foundIndex]
@@ -74,7 +81,7 @@ const mutations = {
 
 const actions = {
   init ({ commit, state }) {
-    offlineDatabase().select('domain').from('domains').then(row => {
+    offlineDatabase('domains').select('domain').then(row => {
       commit('SET_DEFAULT', {
         domains: row.map(x => x.domain)
       })
