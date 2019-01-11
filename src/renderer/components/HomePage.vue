@@ -6,8 +6,6 @@
     <translate></translate>
     <website></website>
     
-    <wappalyzer></wappalyzer>
-    <keywords></keywords>
   </div>
 </template>
 
@@ -16,12 +14,6 @@
   import Error from './Modules/Error'
   import Loading from './Modules/Loading'
   import Website from './Modules/Website'
-  import Wappalyzer from './Modules/Wappalyzer'
-  import Keywords from './Modules/Keywords'
-  import OpenGraph from './Modules/OpenGraph'
-  import PageSpeed from './Modules/Pagespeed'
-  import W3cCss from './Modules/W3cCss'
-  import Microdata from './Modules/Microdata'
 
   export default {
     name: 'home-page',
@@ -29,13 +21,7 @@
       Translate,
       Error,
       Loading,
-      Website,
-      Wappalyzer,
-      Keywords,
-      OpenGraph,
-      PageSpeed,
-      W3cCss,
-      Microdata
+      Website
     },
     methods: {
       open (link) {

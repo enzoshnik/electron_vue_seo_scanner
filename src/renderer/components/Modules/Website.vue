@@ -16,12 +16,19 @@
         <div class="ui form">
           <div class="field">
             <label>{{ $t('website.form.input.label') }} :</label>
-            <input v-model="url" class="prompt" type="url" :placeholder="$t('website.form.input')">
+            <input v-model="url" class="prompt" type="url" :aria-labelledby="url" :placeholder="$t('website.form.input')">
           </div>
         </div>
       </div>
     </div>
-{{ urlsCount }} - {{ urlsCountTrue }}
+
+    <div class="ui active progress">
+      <div class="bar" :style="{ width: progress + '%' }">
+        <div class="progress">{{ progress }}%</div>
+      </div>
+      <div class="label">Найдено ссылок - {{ urlsCount }}; Обработано - {{ urlsCountTrue }}; С ошибками - {{ urlsCountError }}</div>
+    </div>
+    {{ domains }}
     <div class="column" v-if="urls.length > 0">
       <h4 class="ui top attached inverted header">{{ $t('keywords.panel.title') }}</h4>
       <div class="ui bottom attached segment">
@@ -31,13 +38,18 @@
               <th>{{ $t('keywords.array.word') }}</th>
               <th>{{ $t('keywords.array.word') }}</th>
               <th>{{ $t('keywords.array.word') }}</th>
+              <th>{{ $t('keywords.array.word') }}</th>
             </tr>
           </thead>
           <tbody>
-            <tr v-for="(item, index) in urls">
+            <tr v-for="(item, index) in urls" :class="{error: (item.statusCode == 404)}">
               <td>{{ item.url }}</td>
               <td>{{ item.title }}</td>
-              <td :class="{error: !item.quote, positive: item.quote}">{{ item.quote }}</td>
+              <td>{{ item.statusCode }}</td>
+              <td>
+                <i class="icon x red" v-if="item.error"></i>
+                <i class="icon" v-else :class="{'notched circle loading red':!item.quote, 'check green': item.quote }"></i>
+              </td>
             </tr>
           </tbody>
         </table>
@@ -69,20 +81,32 @@
       }
     },
     computed: {
-      isLoading: function () {
+      isLoading () {
         return this.$store.state.Website.isLoading
       },
-      urls: function () {
+      urls () {
         return this.$store.state.Website.urls
       },
-      urlsCount: function () {
+      urlsCount () {
         return this.$store.state.Website.urls.length
       },
-      urlsCountTrue: function () {
+      urlsCountTrue () {
         const l = this.$store.state.Website.urls.filter(x => {
-          return x.quote === true
+          return (x.quote === true && x.error === false)
         })
         return l.length
+      },
+      urlsCountError () {
+        const l = this.$store.state.Website.urls.filter(x => {
+          return x.error !== false
+        })
+        return l.length
+      },
+      progress () {
+        return Math.round(this.urlsCountTrue / this.urlsCount * 100)
+      },
+      domains () {
+        return this.$store.state.Website.domains
       }
     },
     methods: {
@@ -92,32 +116,18 @@
 
         if (isValide) {
           this.error = false
-          // this.$store.commit('UPDATE_LOADING', {
-          //   show: true
-          // })
-
-          // this.$store.commit('UPDATE_WEBSITE', this.url)
+          this.$store.commit('UPDATE_LOADING', {
+            show: true
+          })
+          this.$store.commit('ADD_DOMAIN', this.url)
           WebSpider(this.url)
-          // recrawler(this.url).then($ => {
-          //   this.$store.commit('UPDATE_QUERY', $)
-          //   this.$store.commit('UPDATE_LOADING', {
-          //     show: false
-          //   })
-          // }).catch(err => {
-          //   console.log(err)
-          //   this.$store.commit('UPDATE_LOADING', {
-          //     show: false
-          //   })
-          //   this.$store.commit('UPDATE_ERROR', {
-          //     show: true,
-          //     title: err.message,
-          //     text: err.code
-          //   })
-          // })
         } else {
           this.error = true
         }
       }
+    },
+    mounted () {
+      this.$store.dispatch('init')
     }
   }
 </script>
