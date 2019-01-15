@@ -22,8 +22,8 @@
       </div>
     </div>
 
-    <div class="ui active progress">
-      <div class="bar" :style="{ width: progress + '%' }">
+    <div class="ui active progress" v-if="progress">
+      <div class="bar" :style="{ width: progress + '%' }" v-if="(progress<100)">
         <div class="progress">{{ progress }}%</div>
       </div>
       <div class="label">Найдено ссылок - {{ urlsCount }}; Обработано - {{ urlsCountTrue }}; С ошибками - {{ urlsCountError }}</div>
@@ -42,7 +42,7 @@
             </tr>
           </thead>
           <tbody>
-            <tr v-for="(item, index) in urls" :class="{error: (item.statusCode == 404)}">
+            <tr v-for="(item, index) in urls" :key="index" :class="{error: (item.statusCode == 404)}">
               <td>{{ item.url }}</td>
               <td>{{ item.title }}</td>
               <td>{{ item.statusCode }}</td>
@@ -103,7 +103,7 @@
         return l.length
       },
       progress () {
-        return Math.round(this.urlsCountTrue / this.urlsCount * 100)
+        return Math.round(this.urlsCountTrue / this.urlsCount * 100) + this.urlsCountError
       },
       domains () {
         return this.$store.state.Website.domains

@@ -1,9 +1,9 @@
 {
-  "name": "seo-manager",
+  "name": "electron_vue_seo_scanner",
   "version": "1.0.0",
-  "author": "Marchandise Rudy <r.marchandise@sfr.fr>",
+  "author": "Artem Esyukov <enzoshnik@gmail.com>",
   "description": "SEO Manager Generates a SEO Report Easily",
-  "license": null,
+  "license": "MIT",
   "main": "./dist/electron/main.js",
   "scripts": {
     "build": "node .electron-vue/build.js && electron-builder",
@@ -20,7 +20,7 @@
     "postinstall": "npm run lint:fix"
   },
   "build": {
-    "productName": "seo-manager",
+    "productName": "electron_vue_seo_scanner",
     "appId": "org.simulatedgreg.electron-vue",
     "directories": {
       "output": "build"
