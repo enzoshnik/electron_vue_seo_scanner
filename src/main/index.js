@@ -1,6 +1,6 @@
 'use strict'
 
-import { app, BrowserWindow } from 'electron'
+import { app, BrowserWindow } from 'electron';
 
 /**
  * Set `__static` path to static files in production
@@ -10,10 +10,10 @@ if (process.env.NODE_ENV !== 'development') {
   global.__static = require('path').join(__dirname, '/static').replace(/\\/g, '\\\\')
 }
 
-let mainWindow
+let mainWindow;
 const winURL = process.env.NODE_ENV === 'development'
   ? `http://localhost:9080`
-  : `file://${__dirname}/index.html`
+  : `file://${__dirname}/index.html`;
 
 function createWindow () {
   /**
@@ -23,39 +23,39 @@ function createWindow () {
     height: 563,
     useContentSize: true,
     width: 1000
-  })
+  });
 
-  mainWindow.loadURL(winURL)
+  mainWindow.loadURL(winURL);
 
   mainWindow.on('closed', () => {
     mainWindow = null
   })
-}
+};
 
 // SQlite3
-var sqlite3 = require('sqlite3').verbose()
-var db = new sqlite3.Database('./database.sqlite')
+var sqlite3 = require('sqlite3').verbose();
+var db = new sqlite3.Database('./database.sqlite');
 db.serialize(function () {
   db.run('CREATE TABLE IF NOT EXISTS domains (domain TEXT)')
   db.run('CREATE TABLE IF NOT EXISTS quotes (quote TEXT NOT NULL UNIQUE, domain INTEGER, visited INTEGER)')
   db.run('CREATE TABLE IF NOT EXISTS pages (page TEXT, domain INTEGER, data INTEGER)')
   db.run('CREATE TABLE IF NOT EXISTS data (title TEXT, description TEXT, status_code INTEGER, h1 TEXT)')
-})
-db.close()
+});
+db.close();
 
-app.on('ready', createWindow)
+app.on('ready', createWindow);
 
 app.on('window-all-closed', () => {
   if (process.platform !== 'darwin') {
     app.quit()
   }
-})
+});
 
 app.on('activate', () => {
   if (mainWindow === null) {
     createWindow()
   }
-})
+});
 
 /**
  * Auto Updater

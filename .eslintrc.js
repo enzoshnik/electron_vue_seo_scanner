@@ -1,6 +1,6 @@
 module.exports = {
   root: true,
-  parser: 'babel-eslint',
+  parser: 'vue-eslint-parser',
   parserOptions: {
     sourceType: 'module'
   },
@@ -8,14 +8,18 @@ module.exports = {
     browser: true,
     node: true
   },
-  extends: 'standard',
+  extends: [
+    // "eslint:recommended",
+    "plugin:vue/essential"
+  ],
   globals: {
     __static: true
   },
-  plugins: [
-    'html'
-  ],
-  'rules': {
+  plugins: ["vue"],
+  rules: {
+    indent: 0,
+    "no-tabs": 0,
+    "eol-last": "off",
     // allow paren-less arrow functions
     'arrow-parens': 0,
     // allow async-await

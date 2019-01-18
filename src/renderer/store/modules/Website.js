@@ -21,15 +21,15 @@ const mutations = {
   },
   UPDATE_WEBSITE (state, url) {
     state.url = url
-    state.links = {'/': defaultPageParams}
+    state.links = { '/': defaultPageParams }
   },
   UPDATE_QUERY (state, $) {
     state.$ = $
     state.links = $('a').map((i, el) => $(el).attr('href'))
-      // if (typeof state.links[l] === 'undefined') state.links[l] = false
+    // if (typeof state.links[l] === 'undefined') state.links[l] = false
   },
   ADD_QUOTE (state, quote) {
-    offlineDatabase().insert({'quote': quote.url, 'domain': 1, 'visited': 0}).into('quotes').then()
+    offlineDatabase().insert({ 'quote': quote.url, 'domain': 1, 'visited': 0 }).into('quotes').then()
     state.quote.push(quote.url)
     state.urls.push({
       url: quote.url,
@@ -41,7 +41,7 @@ const mutations = {
     })
   },
   ADD_DOMAIN (state, url) {
-    offlineDatabase('domains').insert({'domain': url}).then()
+    offlineDatabase('domains').insert({ 'domain': url }).then()
     state.domains.push(url)
   },
   REMOVE_QUOTE (state, quote) {
