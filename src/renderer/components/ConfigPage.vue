@@ -1,6 +1,5 @@
 <template>
   <div id="app" class="ui main container">
-
     <div class="ui grid">
       <div class="ui content">
         <router-link to="/">
@@ -16,21 +15,13 @@
         </h2>
       </div>
     </div>
-
     <div class="ui section divider"></div>
-
-    <pagespeed></pagespeed>
   </div>
 </template>
 
 <script>
-  import Pagespeed from './Config/Pagespeed'
-
   export default {
     name: 'home-page',
-    components: {
-      Pagespeed
-    },
     methods: {
       open (link) {
         this.$electron.shell.openExternal(link)
