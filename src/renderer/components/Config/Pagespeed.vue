@@ -8,11 +8,6 @@
           <input aria-labelledby="billing Pagespeed key" class="prompt" type="text" autocomplete="off" v-model="Localkey" v-on:keyup="updateKey(Localkey)">
         </div>
       </div>
-      <p>
-        <a href="#" v-on:click="open('https://console.developers.google.com/apis/api/pagespeedonline.googleapis.com/overview')">
-          {{ $t('config.pagespeed.desc') }}
-        </a>
-      </p>
     </div>
   </div>
 </template>
@@ -21,18 +16,15 @@
   export default {
     data () {
       return {
-        Localkey: this.$store.state.Pagespeed.key
+        Localkey: ''
       }
     },
     computed: {
     },
     methods: {
-      updateKey: function (newKey) {
-        this.$store.commit('UPDATE_PAGESPEED_KEY', newKey)
-        this.$store.state.electronStore.set('pagespeed.key', newKey)
+      updateKey: function () {
       },
-      open (link) {
-        this.$electron.shell.openExternal(link)
+      open () {
       }
     }
   }

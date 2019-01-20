@@ -1,17 +1,13 @@
 import Vue from 'vue'
 import axios from 'axios'
 
-import vuexI18n from 'vuex-i18n'
+import vuexI18n from 'vuex-i18n-ru'
 import translationsEn from './lang/en'
 import translationsRu from './lang/ru'
 
 import App from './App'
 import router from './router'
 import store from './store'
-
-// Libs
-import TreeView from 'vue-json-tree-view'
-Vue.use(TreeView)
 
 // Lang
 Vue.use(vuexI18n.plugin, store)
@@ -25,7 +21,6 @@ Vue.config.productionTip = false
 
 // LocalData
 store.commit('EDIT_LOCAL', store.state.electronStore.get('local', store.state.local))
-store.commit('UPDATE_PAGESPEED_KEY', store.state.electronStore.get('pagespeed.key', ''))
 
 /* eslint-disable no-new */
 new Vue({

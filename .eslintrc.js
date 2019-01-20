@@ -1,7 +1,8 @@
 module.exports = {
   root: true,
-  parser: 'vue-eslint-parser',
+  // parser: 'babel-eslint',
   parserOptions: {
+    parser: "babel-eslint",
     sourceType: 'module'
   },
   env: {
@@ -15,16 +16,7 @@ module.exports = {
   globals: {
     __static: true
   },
-  plugins: ["vue"],
-  rules: {
-    indent: 0,
-    "no-tabs": 0,
-    "eol-last": "off",
-    // allow paren-less arrow functions
-    'arrow-parens': 0,
-    // allow async-await
-    'generator-star-spacing': 0,
-    // allow debugger during development
-    'no-debugger': process.env.NODE_ENV === 'production' ? 2 : 0
-  }
+  plugins: [
+    'html'
+  ]
 }

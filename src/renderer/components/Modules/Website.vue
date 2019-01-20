@@ -1,6 +1,5 @@
 <template>
   <div class="ui">
-
     <div class="ui error message" v-if="error">
       <i v-on:click="error = false" class="close icon"></i>
       <div class="header">{{ $t('website.form.error.content') }}</div>
